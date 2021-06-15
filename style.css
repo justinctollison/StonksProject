@@ -2,3 +2,13 @@ body{
     display: grid;
     grid-template-columns: 2fr 8fr
 }
+
+#show-panel{
+    background-color: rgb(192, 19, 54);
+    color: white;
+}
+
+#list-panel{
+    background-color: rgb(1, 153, 1);
+    color: white;
+}

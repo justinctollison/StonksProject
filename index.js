@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () =>
     }
 
     //fetch stock data from four symbols using the yahoo finance API, jsons it into a object, then uses the object in stocklist function
-    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=AMC%2CGME%2CNOK%2CBB", configuration)
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=AMC%2CGME%2CNOK%2CBB%2", configuration)
     .then(function(response){
         return response.json();
     })
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () =>
             console.log("testing")
         })
     }
-
 //allow user to interact with sidelist OR search for stock
 //display stock chart and statistics
 
@@ -70,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () =>
         <li><strong>Symbol</strong>: ${stock.symbol}</li>
         <li><strong>Current Price</strong>: $ ${stock.regularMarketPrice}</li>
         <li><strong>Previous Close</strong>: $ ${stock.regularMarketPreviousClose}</li>
-        <li><strong>Market Change</strong>: $ ${stock.regularMarketChange}</li>
-        <li><strong>Market Change Percent</strong>:  ${stock.regularMarketChangePercent} %</li>
+        <li><strong>Market Change</strong>: $ ${stock.regularMarketChange.toFixed(2)}</li>
+        <li><strong>Market Change Percent</strong>:  ${stock.regularMarketChangePercent.toFixed(1)} %</li>
         <li><strong>Market Day Range</strong>: $ ${stock.regularMarketDayRange}</li>
         <br>
         `
@@ -80,12 +79,12 @@ document.addEventListener("DOMContentLoaded", () =>
         
         //adds a click event to the like button to display text after interaction
         document.querySelector('button').addEventListener('click', function(e){
-            showPanel.innerHTML += "<strong>TO THE MOON"
+            const message = ["Apes strong togeher.", "TO THE MOON", "DIAMOND HANDS", "HOLD"]
+            const a = Math.floor(Math.random() * message.length)
+            alert(message[a])
         })
     }
-//Event Listener 2:
-//add functionality to persist likes in a server
 
-//Event Listener 3:
+//Event Listener optional:
 //comment box
 });
