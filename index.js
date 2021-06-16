@@ -18,11 +18,14 @@
 //Loads everything at the same time on the web page
 document.addEventListener("DOMContentLoaded", () => 
 {
+    //hides the object Object error on the top of the page lol
+     setInterval(function(){ window.scrollBy(0,1); }, 1);
+
     //configuration for fetch, requires API key in order to use yahoo finance
     const configuration = {
         method: "GET",
         headers: {
-        "x-rapidapi-key": "481d539142msh5c8d0b19b0a28bcp1dc5aejsndd7860612836",
+        "x-rapidapi-key": "fde7b0ebc5msh853c0ef5e41b90cp1233b7jsnbe81d2d2ceb5",
         "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
         "useQueryString": true,
         "Content-Type": "application/json",
@@ -47,13 +50,23 @@ document.addEventListener("DOMContentLoaded", () =>
     //function to create a sidepanel list that will display the four stocks to select from, adds event listener to each one
     function stocksList(stock){
         const listPanel = document.querySelector('#list-panel')
-        const stockTitle = document.createElement('li')
+        const stockTitle = document.createElement('ol')
         stockTitle.id = stock.symbol
         stockTitle.innerText = stock.symbol
         listPanel.appendChild(stockTitle)
+
+        //event listener when clicking a stock name from the sidepanel list, executes stockinformation() function
         stockTitle.addEventListener('click', function(e){
             stockInformation(stock)
             console.log("testing")
+        })
+        
+        //mouse over highlight to notify user that the sidepanel list is interactable
+        stockTitle.addEventListener('mouseover', function(e){
+            e.target.style.color = "orange"
+            setTimeout(function(){
+                e.target.style.color = "";
+            }, 500);
         })
     }
 //allow user to interact with sidelist OR search for stock
@@ -74,6 +87,46 @@ document.addEventListener("DOMContentLoaded", () =>
         <li><strong>Market Day Range</strong>: $ ${stock.regularMarketDayRange}</li>
         <br>
         `
+
+        //function to add chart/graph for visual respresentation
+        function dataChart(){
+            
+            //creates array of data grabbed from API
+            let data = [
+                ["Market Open", stock.regularMarketOpen], 
+                ["Market High", stock.regularMarketDayHigh],
+                ["Market Low", stock.regularMarketDayLow],
+                ["Market Close", stock.regularMarketPrice,]
+            ]
+            //Creates line chart
+            chart = anychart.line();
+            
+            //plots data from array
+            chart.line(data)
+            
+            //Sets title to chart
+            chart.title(`${stock.symbol}`)
+           
+            //names the Axis
+            chart.yAxis().title("Price, USD$")
+            chart.xAxis().title("Market Data")
+            
+            //mouse over interactivity with chart
+            chart.interactivity("by-x")
+
+            //selects container div to display the chart
+            const charts = document.querySelector("#container")
+            //draws the chart
+            charts.innerHTML = chart.draw()
+
+            //chart's information, keep below the above code or it will not display the chart properly
+            chart.container("container")
+
+            //todo: there is an Object object at the top of the page, I suspect it's trying to display an object or array of information instead of the actual chart display
+            //no idea how to fix it yet
+        }
+        dataChart()
+        
         //adds a like button
         showPanel.innerHTML += `<button id=${stock.symbol}>I like the stock</button>`
         
