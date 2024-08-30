@@ -2,5 +2,4 @@ A simple single-paged application to display the popular (Meme) Stocks from the 
 
 I used HTML5 UP! for the CSS styling, rapid.api to grab the Yahoo finance, and anycharts.come to configure the informational charts.
 
-Video link: https://www.youtube.com/watch?v=Lu2cTpTsA1I&ab_channel=JustinTollison
 Blog link: https://medium.com/justinctollison/using-javascript-fetch-to-grab-yahoo-finance-api-949fd24876c9
